@@ -1,0 +1,9 @@
+{
+	"name": "TestADF-22May",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "85011ca3-f931-40e2-b0e6-cb4be7c63780",
+		"tenantId": "a32cb240-e82b-4377-b9cd-281f04f1dcde"
+	}
+}

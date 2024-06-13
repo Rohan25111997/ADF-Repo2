@@ -1,0 +1,125 @@
+{
+	"name": "Dataflow Conditional split",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Source_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Dest_Gen2_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "IND"
+				},
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Dest_Gen2_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "USA"
+				},
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Dest_Gen2_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "UK"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "sort2"
+				},
+				{
+					"name": "sort3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Country as string,",
+				"          Year as short,",
+				"          Product_Type as string,",
+				"          Sales as short",
+				"     ),",
+				"     useSchema: false,",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     container: 'input',",
+				"     fileName: 'Sales_File_2020_USA_UK_IND.csv',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true) ~> source",
+				"source split(Country == 'IND',",
+				"     Country == 'USA',",
+				"     Country == 'UK',",
+				"     disjoint: true) ~> split1@(IND, USA, UK)",
+				"split1@UK sort(desc(Sales, true)) ~> sort1",
+				"split1@USA sort(desc(Sales, true)) ~> sort2",
+				"split1@IND sort(desc(Sales, true)) ~> sort3",
+				"sort3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delimited',",
+				"     fileSystem: 'dest-con-001',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true,",
+				"     partitionFileNames:['IND.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> IND",
+				"sort2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delimited',",
+				"     fileSystem: 'dest-con-001',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true,",
+				"     partitionFileNames:['USA.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> USA",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delimited',",
+				"     fileSystem: 'dest-con-001',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true,",
+				"     partitionFileNames:['UK.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> UK"
+			]
+		}
+	}
+}

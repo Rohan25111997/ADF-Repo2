@@ -1,0 +1,30 @@
+{
+	"name": "DS_Dest_Http_Lab7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Dest_Lab7",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().Filename",
+					"type": "Expression"
+				},
+				"folderPath": "mypracticedata",
+				"fileSystem": "dest-con-002"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

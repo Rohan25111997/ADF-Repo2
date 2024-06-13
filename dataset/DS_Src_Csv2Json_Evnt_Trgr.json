@@ -1,0 +1,24 @@
+{
+	"name": "DS_Src_Csv2Json_Evnt_Trgr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Src_Csv2Json_Evnt_Trgr",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "EmployeesData.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

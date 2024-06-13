@@ -1,0 +1,13 @@
+{
+	"name": "ds_inputtables_Lab11_Part2_Lookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Filesinsqltables_Lab11",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

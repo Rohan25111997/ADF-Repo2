@@ -1,0 +1,49 @@
+{
+	"name": "PL_Executepipeline_Part1andPart2_Lab11",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteFirstPipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_BLOB_TO_SQLDB_Lab11_Part1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "ExecuteSecondPipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ExecuteFirstPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_SQLDB_TOADL_Lab11_Part2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-05-30T07:39:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

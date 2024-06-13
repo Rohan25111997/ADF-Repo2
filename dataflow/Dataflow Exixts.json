@@ -1,0 +1,121 @@
+{
+	"name": "Dataflow Exixts",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Source_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "Employees"
+				},
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Source_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "Departments"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "LS_DF_Dest_Gen2_Filter",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "exists1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          Salary as integer,",
+				"          Dept_ID as integer",
+				"     ),",
+				"     useSchema: false,",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     container: 'input',",
+				"     fileName: 'EmployeesInfo.csv',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true) ~> Employees",
+				"source(output(",
+				"          Dept as string,",
+				"          Dept_ID as integer",
+				"     ),",
+				"     useSchema: false,",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     container: 'input',",
+				"     fileName: 'DepartmentsInfo.csv',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true) ~> Departments",
+				"Employees, Departments exists(Employees@Dept_ID == Departments@Dept_ID,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sort(desc(Salary, true)) ~> sort1",
+				"sort1 aggregate(groupBy(Dept_ID),",
+				"     Total_Salary = sum(Salary),",
+				"          Count_of_Employee = count(Dept_ID),",
+				"          Highest_Salary = max(Salary)) ~> aggregate1",
+				"aggregate1, Departments join(aggregate1@Dept_ID == Departments@Dept_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 select(mapColumn(",
+				"          Dept_ID = aggregate1@Dept_ID,",
+				"          Dept,",
+				"          Count_of_Employees = Count_of_Employee,",
+				"          Highest_Salary,",
+				"          Total_Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delimited',",
+				"     fileSystem: 'dest-con-001',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true,",
+				"     partitionFileNames:['WithoutExists_Department.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

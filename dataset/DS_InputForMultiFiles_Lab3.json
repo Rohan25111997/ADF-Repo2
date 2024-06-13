@@ -1,0 +1,32 @@
+{
+	"name": "DS_InputForMultiFiles_Lab3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Source_Lab3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SourceFiles": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().SourceFiles",
+					"type": "Expression"
+				},
+				"container": "src-con-001"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

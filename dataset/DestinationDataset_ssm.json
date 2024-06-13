@@ -1,0 +1,24 @@
+{
+	"name": "DestinationDataset_ssm",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LA_Gen2SA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "StudentsDetails",
+				"fileSystem": "dest-con"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

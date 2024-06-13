@@ -1,0 +1,23 @@
+{
+	"name": "DS_Dest_Dataflow_Join",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Dest_Dataflow_Join",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "employees-con"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

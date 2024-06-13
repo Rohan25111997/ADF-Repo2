@@ -1,0 +1,25 @@
+{
+	"name": "DS_Source_Sql_Parameterize_Yt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Source_Sql_Parameterize_Yt",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

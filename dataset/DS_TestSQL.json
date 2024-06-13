@@ -1,0 +1,17 @@
+{
+	"name": "DS_TestSQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_TestSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "StudentDetails"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

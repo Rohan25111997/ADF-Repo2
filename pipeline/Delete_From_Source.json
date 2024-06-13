@@ -1,0 +1,42 @@
+{
+	"name": "Delete_From_Source",
+	"properties": {
+		"activities": [
+			{
+				"name": "DeleteSourceFile",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Binary1",
+						"type": "DatasetReference"
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "LA_BlbZipSA",
+							"type": "LinkedServiceReference"
+						},
+						"path": "src-con-001"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-06-10T16:39:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

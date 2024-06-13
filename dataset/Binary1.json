@@ -1,0 +1,19 @@
+{
+	"name": "Binary1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlbStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ZipFolderPractice.zip",
+				"container": "src-con-001"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

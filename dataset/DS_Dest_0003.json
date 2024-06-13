@@ -1,0 +1,17 @@
+{
+	"name": "DS_Dest_0003",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Dest_0003",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EmployeeResult"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,31 @@
+{
+	"name": "DS_Dest_Blb_Parameterize_Yt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Dest_Blb_Parameterize_Yt",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"containername": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": {
+					"value": "@dataset().containername",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

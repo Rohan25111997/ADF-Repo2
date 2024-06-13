@@ -1,0 +1,17 @@
+{
+	"name": "DS_DF_SQL_SOURCE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_DF_SQL_SOURCE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "Product"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
